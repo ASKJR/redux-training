@@ -7,10 +7,10 @@ const setUsers = (users) => {
     users,
   };
 };
-export const fetchUsers = () => {
+export const fetchUsers = (qty = 2) => {
   return (dispatch) => {
     axios
-      .get("/?results=5")
+      .get(`/?results=${qty}&nat=br`)
       .then(({ data }) => {
         const users = data.results;
         console.log(users);

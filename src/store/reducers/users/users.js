@@ -8,7 +8,7 @@ const users = (state = initialState, action) => {
     case actionTypes.LOAD_USERS:
       return {
         ...state,
-        users: [...state.users].concat(action.users),
+        users: [...state.users, ...action.users],
       };
     default:
       return state;

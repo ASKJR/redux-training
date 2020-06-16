@@ -2,8 +2,8 @@ import React from "react";
 import { ListGroup, Row, Col } from "react-bootstrap";
 import User from "./User/User";
 const users = (props) => {
-  const users = props.users.map((u, i) => {
-    return <User user={u} key={i} />;
+  const users = props.users.map((u) => {
+    return <User user={u} key={u.login.uuid} />;
   });
 
   return (
