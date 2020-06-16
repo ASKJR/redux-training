@@ -4,6 +4,7 @@ import Button from "../../components/UI/Button";
 import { connect } from "react-redux";
 import { FaTrashAlt } from "react-icons/fa";
 import Profile from "../../components/Users/User/Profile/Profile";
+import { removeUser } from "../../store/actions";
 
 class UserContainer extends Component {
   state = {
@@ -17,16 +18,27 @@ class UserContainer extends Component {
     this.setState({ user });
   }
 
+  removeUserHandler = (uuid) => {
+    this.props.removeUser(uuid);
+    this.props.history.push("/");
+  };
+
   render() {
-    const profile = this.state.user ? <Profile user={this.state.user} /> : null;
-    return (
-      <Container>
-        <Button type="danger">
-          <FaTrashAlt />
-        </Button>
-        {profile}
-      </Container>
-    );
+    let profile = null;
+    if (this.state.user) {
+      profile = (
+        <React.Fragment>
+          <Button
+            type="danger"
+            clicked={() => this.removeUserHandler(this.state.user.login.uuid)}
+          >
+            <FaTrashAlt />
+          </Button>
+          <Profile user={this.state.user} />
+        </React.Fragment>
+      );
+    }
+    return <Container>{profile}</Container>;
   }
 }
 
@@ -36,4 +48,10 @@ const mapPropsToState = (state) => {
   };
 };
 
-export default connect(mapPropsToState)(UserContainer);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeUser: (uuid) => dispatch(removeUser(uuid)),
+  };
+};
+
+export default connect(mapPropsToState, mapDispatchToProps)(UserContainer);

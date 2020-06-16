@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa";
 
 class UsersContainer extends Component {
   componentDidMount() {
-    if (this.props.users.length === 0) {
+    if (this.props.fetchOnMount) {
       this.props.fetchData();
     }
   }
@@ -28,6 +28,7 @@ class UsersContainer extends Component {
 const mapStateToProps = (state) => {
   return {
     users: state.users,
+    fetchOnMount: state.fetchOnMount,
   };
 };
 

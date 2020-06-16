@@ -1,4 +1,4 @@
-import { LOAD_USERS } from "./actionTypes";
+import { LOAD_USERS, REMOVE_USER } from "./actionTypes";
 import axios from "../axios";
 
 const setUsers = (users) => {
@@ -19,5 +19,12 @@ export const fetchUsers = (qty = 2) => {
         dispatch(setUsers(users));
       })
       .catch((err) => console.log(err));
+  };
+};
+
+export const removeUser = (uuid) => {
+  return {
+    type: REMOVE_USER,
+    uuid,
   };
 };

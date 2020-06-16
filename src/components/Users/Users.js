@@ -3,10 +3,14 @@ import { ListGroup, Row, Col } from "react-bootstrap";
 import User from "./User/User";
 import { Link } from "react-router-dom";
 const users = (props) => {
-  const users = props.users.map((u) => {
+  const users = props.users.map((u, indx) => {
     return (
-      <Link to={`/user/${u.login.uuid}`} key={u.login.uuid}>
-        <User user={u} />
+      <Link
+        to={`/user/${u.login.uuid}`}
+        key={u.login.uuid}
+        style={{ textDecoration: "none" }}
+      >
+        <User user={u} seq={indx + 1} />
       </Link>
     );
   });
