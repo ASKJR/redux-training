@@ -8,7 +8,9 @@ import { FaPlus } from "react-icons/fa";
 
 class UsersContainer extends Component {
   componentDidMount() {
-    this.props.fetchData();
+    if (this.props.users.length === 0) {
+      this.props.fetchData();
+    }
   }
 
   render() {
