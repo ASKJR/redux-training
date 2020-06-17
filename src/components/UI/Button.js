@@ -4,7 +4,7 @@ import { Button, Row, Col } from "react-bootstrap";
 const button = (props) => {
   return (
     <Row>
-      <Col xs={{ span: 2, offset: 10 }} md={{ span: 1, offset: 11 }}>
+      <Col xs={{ span: 3, offset: 9 }} md={{ span: 1, offset: 11 }}>
         <Button variant={props.type} onClick={props.clicked} block>
           {props.children}
         </Button>
