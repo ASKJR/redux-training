@@ -4,12 +4,18 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { createStore, compose, applyMiddleware } from "redux";
+import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import reducer from "./store/reducers/users/users";
+import usersReducer from "./store/reducers/users";
+import dogsReducer from "./store/reducers/dogs";
 import thunk from "redux-thunk";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const reducers = combineReducers({
+  users: usersReducer,
+  dogs: dogsReducer,
+});
 
 const logger = (store) => {
   return (next) => {
@@ -22,7 +28,7 @@ const logger = (store) => {
 };
 
 const store = createStore(
-  reducer,
+  reducers,
   composeEnhancers(applyMiddleware(logger, thunk))
 );
 

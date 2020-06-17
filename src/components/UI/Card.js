@@ -13,6 +13,7 @@ const card = (props) => {
       break;
     case "contact":
       icon = <MdPhoneInTalk />;
+      break;
     default:
       break;
   }

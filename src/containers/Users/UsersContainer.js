@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Container } from "react-bootstrap";
 import Users from "../../components/Users/Users";
 import { connect } from "react-redux";
-import { fetchUsers } from "../../store/actions";
+import { fetchUsers } from "../../store/actions/users";
 import Button from "../../components/UI/Button";
 import { FaPlus } from "react-icons/fa";
 
@@ -27,8 +27,8 @@ class UsersContainer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    users: state.users,
-    fetchOnMount: state.fetchOnMount,
+    users: state.users.users,
+    fetchOnMount: state.users.fetchOnMount,
   };
 };
 

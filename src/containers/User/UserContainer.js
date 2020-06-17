@@ -4,7 +4,8 @@ import Button from "../../components/UI/Button";
 import { connect } from "react-redux";
 import { FaTrashAlt } from "react-icons/fa";
 import Profile from "../../components/Users/User/Profile/Profile";
-import { removeUser } from "../../store/actions";
+import { removeUser } from "../../store/actions/users";
+import { fetchDogs } from "../../store/actions/dogs";
 
 class UserContainer extends Component {
   state = {
@@ -16,6 +17,7 @@ class UserContainer extends Component {
       ({ login }) => login.uuid === this.props.match.params.userId
     );
     this.setState({ user });
+    this.props.fetchDogs();
   }
 
   removeUserHandler = (uuid) => {
@@ -44,13 +46,15 @@ class UserContainer extends Component {
 
 const mapPropsToState = (state) => {
   return {
-    users: state.users,
+    users: state.users.users,
+    dogs: state.dogs.dog,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     removeUser: (uuid) => dispatch(removeUser(uuid)),
+    fetchDogs: () => dispatch(fetchDogs()),
   };
 };
 
