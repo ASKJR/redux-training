@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const instance = axios.create({
+export const instanceUsers = axios.create({
   baseURL: "https://randomuser.me/api",
 });
 
-export default instance;
+export const instanceDogs = axios.create({
+  baseURL: "https://dog.ceo/api",
+});

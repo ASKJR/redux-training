@@ -1,18 +1,28 @@
-import { LOAD_DOGS } from "../actionTypes";
-import axios from "axios";
+import { LOAD_DOGS, REMOVE_DOG_OWNER } from "../actionTypes";
+import { instanceDogs as axios } from "../../axios";
 
-const setDogs = (dog) => {
+const setDogs = (payload) => {
   return {
     type: LOAD_DOGS,
-    dog,
+    payload,
   };
 };
 
-export const fetchDogs = () => {
+export const fetchDogs = (uuid, qty = 3) => {
   return (dispatch) => {
-    axios.get("https://dog.ceo/api/breeds/image/random").then(({ data }) => {
-      const dog = data.message;
-      dispatch(setDogs(dog));
-    });
+    axios
+      .get(`/breeds/image/random/${qty}`)
+      .then(({ data }) => {
+        const payload = { uuid, photos: data.message };
+        dispatch(setDogs(payload));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const removeOwner = (uuid) => {
+  return {
+    type: REMOVE_DOG_OWNER,
+    uuid,
   };
 };

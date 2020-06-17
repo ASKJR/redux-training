@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { FaTrashAlt } from "react-icons/fa";
 import Profile from "../../components/Users/User/Profile/Profile";
 import { removeUser } from "../../store/actions/users";
-import { fetchDogs } from "../../store/actions/dogs";
+import { fetchDogs, removeOwner } from "../../store/actions/dogs";
 
 class UserContainer extends Component {
   state = {
@@ -13,14 +13,17 @@ class UserContainer extends Component {
   };
 
   componentDidMount() {
-    const [user] = this.props.users.filter(
-      ({ login }) => login.uuid === this.props.match.params.userId
-    );
+    const uuid = this.props.match.params.userId;
+    const [user] = this.props.users.filter(({ login }) => login.uuid === uuid);
     this.setState({ user });
-    this.props.fetchDogs();
+    const shouldFetch = this.props.owners.find((owner) => owner.uuid === uuid);
+    if (shouldFetch === undefined) {
+      this.props.fetchDogs(uuid);
+    }
   }
 
   removeUserHandler = (uuid) => {
+    this.props.removeOwner(uuid);
     this.props.removeUser(uuid);
     this.props.history.push("/");
   };
@@ -47,14 +50,15 @@ class UserContainer extends Component {
 const mapPropsToState = (state) => {
   return {
     users: state.users.users,
-    dogs: state.dogs.dog,
+    owners: state.dogs.owners,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     removeUser: (uuid) => dispatch(removeUser(uuid)),
-    fetchDogs: () => dispatch(fetchDogs()),
+    removeOwner: (uuid) => dispatch(removeOwner(uuid)),
+    fetchDogs: (uuid) => dispatch(fetchDogs(uuid)),
   };
 };
 

@@ -1,5 +1,5 @@
 import { LOAD_USERS, REMOVE_USER } from "../actionTypes";
-import axios from "../../axios";
+import { instanceUsers as axios } from "../../axios";
 
 const setUsers = (users) => {
   return {
