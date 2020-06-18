@@ -10,15 +10,27 @@ import { fetchDogs, removeOwner } from "../../store/actions/dogs";
 class UserContainer extends Component {
   state = {
     user: null,
+    dogs: null,
   };
 
   componentDidMount() {
     const uuid = this.props.match.params.userId;
     const [user] = this.props.users.filter(({ login }) => login.uuid === uuid);
     this.setState({ user });
-    const shouldFetch = this.props.owners.find((owner) => owner.uuid === uuid);
-    if (shouldFetch === undefined) {
+    const dogs = this.props.owners.find((owner) => owner.uuid === uuid);
+
+    if (dogs === undefined) {
       this.props.fetchDogs(uuid);
+    } else {
+      this.setState({ dogs });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.owners.length !== this.props.owners.length) {
+      const uuid = this.props.match.params.userId;
+      const dogs = this.props.owners.find((owner) => owner.uuid === uuid);
+      this.setState({ dogs });
     }
   }
 
@@ -39,7 +51,7 @@ class UserContainer extends Component {
           >
             <FaTrashAlt />
           </Button>
-          <Profile user={this.state.user} />
+          <Profile user={this.state.user} dogs={this.state.dogs} />
         </React.Fragment>
       );
     }
