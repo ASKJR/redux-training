@@ -10,7 +10,7 @@ const pets = (props) => {
 
     gallery = <ImageGallery items={dogs} showIndex lazyLoad />;
   }
-  return <React.Fragment>{gallery}</React.Fragment>;
+  return gallery;
 };
 
 export default pets;
